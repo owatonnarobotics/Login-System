@@ -30,7 +30,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
         userLabel = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -46,7 +46,7 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("OK");
+        okButton.setText("OK");
 
         fileMenu.setText("File");
 
@@ -72,7 +72,7 @@ public class LoginScreen extends javax.swing.JFrame {
                         .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,7 +83,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(okButton)
                 .addContainerGap(112, Short.MAX_VALUE))
         );
 
@@ -133,8 +133,8 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField idTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JButton okButton;
     private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables
 }
