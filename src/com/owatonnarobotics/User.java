@@ -1,26 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.owatonnarobotics;
 
 /**
- *
+ * A user signing in and out of the database
  * @author Eson
  */
 public class User {
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String id;
 
     public String getFirstName() {
         return firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getId() {
@@ -31,17 +25,17 @@ public class User {
         this.firstName = firstName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setSecondName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setId(String id) {
         this.id = id;
     }
     
-    public User(String fName, String lName, String num){
-        firstName = fName;
-        secondName = lName;
-        id = num;
+    public User(String firstName, String lastName, String id){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
     }
 }
