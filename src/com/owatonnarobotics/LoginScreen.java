@@ -34,11 +34,6 @@ public class LoginScreen extends javax.swing.JFrame {
         userLabel.setText("User ID");
 
         idTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        idTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextFieldActionPerformed(evt);
-            }
-        });
 
         okButton.setText("OK");
 
@@ -83,10 +78,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
