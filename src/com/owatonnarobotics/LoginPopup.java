@@ -6,6 +6,9 @@
 
 package com.owatonnarobotics;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  *
  * @author Eson
@@ -17,10 +20,13 @@ public class LoginPopup extends javax.swing.JFrame {
      * @param user the user that is signing in
      * @param totalTime the total time that the user has been signed in, in minutes
      */
-    public LoginPopup(User user, String totalTime) {
+    public LoginPopup(User user, int totalTime) {
         initComponents();
+        
         this.user = user;
-        setLabels();
+        this.calendar = new GregorianCalendar();
+        
+        setLabels(totalTime);
     }
 
     /**
@@ -97,12 +103,19 @@ public class LoginPopup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void setLabels(){
-        
+    
+    private void setLabels(int totalTime){
+        fNameLabel.setText(user.getFirstName());
+        lNameLabel.setText(user.getLastName());
+        timeLabel.setText("Time: " + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));
+        // If there are minutes (not just hours), set the String to those minutes
+        String minutes = (totalTime % 60 == 0) ? "" : totalTime % 60 + "M";
+        // Ex: 2H 5M
+        timeWeekLabel.setText(Integer.toString(totalTime / 60) + "H " + minutes);
     }
     
     private User user;
+    private GregorianCalendar calendar;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
