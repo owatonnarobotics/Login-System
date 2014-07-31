@@ -8,6 +8,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String id;
+    private int totalTime;
 
     public String getFirstName() {
         return firstName;
@@ -19,6 +20,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+    
+    public int getTotalTime(){
+        return totalTime;
     }
 
     public void setFirstName(String firstName) {
@@ -33,9 +38,14 @@ public class User {
         this.id = id;
     }
     
-    public User(String firstName, String lastName, String id){
+    public void setTotalTime(int totalTime){
+        this.totalTime = totalTime;
+    }
+    
+    public User(String firstName, String lastName, String id, int totalTime){
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+        this.totalTime = totalTime;
     }
 }
