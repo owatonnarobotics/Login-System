@@ -25,6 +25,7 @@ public class ExcelManager {
     
     private static final int rowStart = 2;
     
+    // Returns a new user given the id
     public static User getUser(String id) throws IOException, BiffException{
         Workbook workbook = Workbook.getWorkbook(new File(excelLocation));
         
@@ -35,9 +36,10 @@ public class ExcelManager {
             if(cell.getContents().equals(id)){
                 String fName = sheet.getCell(fNameColumn, currentRow).getContents();
                 String lName = sheet.getCell(lNameColumn, currentRow).getContents();
+                int totalTime = Integer.parseInt(sheet.getCell(totalTimeColumn, currentRow).getContents());
                 
                 workbook.close();
-                return new User(fName, lName, id);
+                return new User(fName, lName, id, totalTime);
             }
             currentRow += 1;
         }
