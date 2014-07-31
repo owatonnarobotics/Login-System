@@ -44,11 +44,18 @@ public class LoginPopup extends javax.swing.JFrame {
         timeLabel = new javax.swing.JLabel();
         timeWeekLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
         inOutButton.setText("Out");
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         fNameLabel.setText("First Name");
 
@@ -102,6 +109,10 @@ public class LoginPopup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
     
     private void setLabels(){
         fNameLabel.setText(user.getFirstName());

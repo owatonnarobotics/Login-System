@@ -113,9 +113,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 }
                 
                 errorLabel.setText("");
-                
+                idTextField.setText("");
                 LoginPopup popup = new LoginPopup(newUser);
-                popup.setVisible(true);
+                popup.setBounds(this.getX() + 50, this.getY() + 50, popup.getWidth(), popup.getHeight());
             } catch (IOException ex) {
                 errorLabel.setText("Error: IOException in LoginScreen");
             } catch (BiffException ex) {
