@@ -18,15 +18,14 @@ public class LoginPopup extends javax.swing.JFrame {
     /**
      * Creates new form LoginPopup
      * @param user the user that is signing in
-     * @param totalTime the total time that the user has been signed in, in minutes
      */
-    public LoginPopup(User user, int totalTime) {
+    public LoginPopup(User user) {
         initComponents();
         
         this.user = user;
         this.calendar = new GregorianCalendar();
         
-        setLabels(totalTime);
+        setLabels();
     }
 
     /**
@@ -104,14 +103,14 @@ public class LoginPopup extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void setLabels(int totalTime){
+    private void setLabels(){
         fNameLabel.setText(user.getFirstName());
         lNameLabel.setText(user.getLastName());
         timeLabel.setText("Time: " + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));
         // If there are minutes (not just hours), set the String to those minutes
-        String minutes = (totalTime % 60 == 0) ? "" : totalTime % 60 + "M";
+        String minutes = (user.getTotalTime() % 60 == 0) ? "" : user.getTotalTime() % 60 + "M";
         // Ex: 2H 5M
-        timeWeekLabel.setText(Integer.toString(totalTime / 60) + "H " + minutes);
+        timeWeekLabel.setText(Integer.toString(user.getTotalTime() / 60) + "H " + minutes);
     }
     
     private User user;
