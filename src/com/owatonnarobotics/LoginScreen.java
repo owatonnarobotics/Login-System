@@ -1,5 +1,10 @@
 package com.owatonnarobotics;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jxl.read.biff.BiffException;
+
 /**
  * The main screen that will ask the user to log in
  * @author Eson
@@ -25,6 +30,7 @@ public class LoginScreen extends javax.swing.JFrame {
         userLabel = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
         okButton = new javax.swing.JButton();
+        errorLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -36,6 +42,13 @@ public class LoginScreen extends javax.swing.JFrame {
         idTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        errorLabel.setForeground(new java.awt.Color(255, 0, 51));
 
         fileMenu.setText("File");
 
@@ -61,7 +74,10 @@ public class LoginScreen extends javax.swing.JFrame {
                         .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
-                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(errorLabel)))
                 .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -73,11 +89,40 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(okButton)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addComponent(errorLabel)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        String id = idTextField.getText();
+        
+        if(id.length() != 3){
+            errorLabel.setText("Error: IDs are only 3 numbers");
+        }
+        else{
+            try {
+                User newUser = ExcelManager.getUser(id);
+                
+                if(newUser == null){
+                    errorLabel.setText("Error: User not found");
+                    return;
+                }
+                
+                errorLabel.setText("");
+                
+                LoginPopup popup = new LoginPopup(newUser);
+                popup.setVisible(true);
+            } catch (IOException ex) {
+                errorLabel.setText("Error: IOException in LoginScreen");
+            } catch (BiffException ex) {
+                errorLabel.setText("Error: BiffException in LoginScreen");
+            }
+        }
+    }//GEN-LAST:event_okButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +160,7 @@ public class LoginScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField idTextField;
