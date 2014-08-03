@@ -6,8 +6,11 @@
 
 package com.owatonnarobotics;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -122,6 +125,17 @@ public class LoginPopup extends javax.swing.JFrame {
         String minutes = (user.getTotalTime() % 60 == 0) ? "" : user.getTotalTime() % 60 + "M";
         // Ex: 2H 5M
         timeWeekLabel.setText(Integer.toString(user.getTotalTime() / 60) + "H " + minutes);
+        
+        try {
+            if(LoginManager.userSignedIn(user.getId())){
+                inOutButton.setText("Out");
+            }
+            else{
+                inOutButton.setText("In");
+            }
+        } catch (Exception ex) {
+            inOutButton.setText("Error");
+        }
     }
     
     private User user;
