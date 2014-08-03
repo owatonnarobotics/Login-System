@@ -12,14 +12,14 @@ import java.util.Properties;
  */
 public class LoginManager {
     
-    private static String propLocation = "login.properties";
+    private static final String PROP_LOCATION = "login.properties";
     
     public static void createUser(String id) throws FileNotFoundException, IOException{
         
         Properties prop = new Properties();
         OutputStream output = null;
         
-        output = new FileOutputStream(propLocation);
+        output = new FileOutputStream(PROP_LOCATION);
         
         prop.setProperty(id, "out");
         
