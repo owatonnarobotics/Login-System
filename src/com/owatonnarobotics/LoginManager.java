@@ -16,25 +16,47 @@ public class LoginManager {
     
     private static final String PROP_LOCATION = "login.properties";
     
-    public static void createUser(String id) throws FileNotFoundException, IOException{
-        
-        Properties property = new Properties();
-        OutputStream output = new FileOutputStream(PROP_LOCATION);
-        
-        property.setProperty(id, "out");
-        
-        property.store(output, null);
-        
-        output.close();
-    }
-    
+    // Tells if the user is signed in
     public static boolean userSignedIn(String id) throws FileNotFoundException, IOException{
         
         Properties property = new Properties();
-        InputStream input = new FileInputStream(PROP_LOCATION);
+        try (InputStream input = new FileInputStream(PROP_LOCATION)) {
+            property.load(input);
         
-        property.load(input);
+            return ! property.getProperty(id).equals("out");
+        }
+    }
+    
+    // Signs out a user, can also be used to create a new user
+    public static void signOut(String id) throws FileNotFoundException, IOException{
         
-        return ! property.getProperty(id).equals("out");
+        Properties property = new Properties();
+        
+        try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
+            property.load(in);
+        }
+        
+        try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
+            property.setProperty(id, "out");
+            
+            property.store(output, null);
+        }
+    }
+    
+    // Signs a user in through the properties file
+    public static void signIn(String id, String time) throws FileNotFoundException, IOException {
+        
+        Properties property = new Properties();
+        
+        try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
+            property.load(in);
+        }
+        
+        try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
+            property.setProperty(id, time);
+            
+            property.store(output, null);
+        }
     }
 }
+;
