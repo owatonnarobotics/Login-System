@@ -1,8 +1,6 @@
 package com.owatonnarobotics;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jxl.read.biff.BiffException;
 
 /**
@@ -115,7 +113,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 errorLabel.setText("");
                 idTextField.setText("");
                 LoginPopup popup = new LoginPopup(newUser);
-                popup.setBounds(this.getX() + 50, this.getY() + 50, popup.getWidth(), popup.getHeight());
+                popup.setBounds(this.getX() + 120, this.getY() + 120, popup.getWidth(), popup.getHeight());
+                popup.setVisible(true);
+                
             } catch (IOException ex) {
                 errorLabel.setText("Error: IOException in LoginScreen");
             } catch (BiffException ex) {
