@@ -52,6 +52,11 @@ public class LoginPopup extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
         inOutButton.setText("Out");
+        inOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inOutButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +121,17 @@ public class LoginPopup extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void inOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inOutButtonActionPerformed
+        if(inOutButton.getText().equals("Out")){
+            try {
+                LoginManager.signOut(user.getId());
+                this.dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_inOutButtonActionPerformed
     
     private void setLabels(){
         fNameLabel.setText(user.getFirstName());
