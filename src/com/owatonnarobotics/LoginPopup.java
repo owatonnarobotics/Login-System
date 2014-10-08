@@ -149,7 +149,17 @@ public class LoginPopup extends javax.swing.JFrame {
             else{
                 inOutButton.setText("In");
             }
-        } catch (Exception ex) {
+        } catch (NullPointerException ex) {
+            try {
+                // If user doesn't exist in properties, create new user logged out
+                LoginManager.signOut(user.getId());
+                inOutButton.setText("Out");
+            } catch (IOException ex1) {
+                Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex1);
+                inOutButton.setText("Error");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             inOutButton.setText("Error");
         }
     }
