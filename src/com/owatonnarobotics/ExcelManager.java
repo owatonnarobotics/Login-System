@@ -41,7 +41,6 @@ public class ExcelManager {
                 workbook.close();
                 return new User(fName, lName, id, totalTime);
             }
-            currentRow += 1;
         }
         
         workbook.close();
