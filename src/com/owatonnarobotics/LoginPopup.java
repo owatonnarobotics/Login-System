@@ -136,7 +136,13 @@ public class LoginPopup extends javax.swing.JFrame {
     private void setLabels(){
         fNameLabel.setText(user.getFirstName());
         lNameLabel.setText(user.getLastName());
-        timeLabel.setText("Time: " + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));
+        
+        String formatTime = Integer.toString(calendar.get(Calendar.MINUTE));
+        if(formatTime.length() < 2){
+            formatTime += "0";
+        }
+        
+        timeLabel.setText("Time: " + calendar.get(Calendar.HOUR) + ":" + formatTime);
         // If there are minutes (not just hours), set the String to those minutes
         String minutes = (user.getTotalTime() % 60 == 0) ? "" : user.getTotalTime() % 60 + "M";
         // Ex: 2H 5M
