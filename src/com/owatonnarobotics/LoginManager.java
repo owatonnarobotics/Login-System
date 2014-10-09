@@ -27,9 +27,7 @@ public class LoginManager {
         }
     }
     
-    // Signs out a user, can also be used to create a new user
-    public static void signOut(String id) throws FileNotFoundException, IOException{
-        
+    public static void createUser(String id) throws FileNotFoundException, IOException{
         Properties property = new Properties();
         
         try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
@@ -43,8 +41,8 @@ public class LoginManager {
         }
     }
     
-    // Signs a user in through the properties file
-    public static void signIn(String id, String time) throws FileNotFoundException, IOException {
+    // Signs out a user and returns the inital time they signed in
+    public static int signOut(String id) throws FileNotFoundException, IOException{
         
         Properties property = new Properties();
         
@@ -53,7 +51,25 @@ public class LoginManager {
         }
         
         try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
-            property.setProperty(id, time);
+            int time = Integer.getInteger(property.getProperty(id));
+            property.setProperty(id, "out");
+            
+            property.store(output, null);
+            return time;
+        }
+    }
+    
+    // Signs a user in through the properties file
+    public static void signIn(String id, int time) throws FileNotFoundException, IOException {
+        
+        Properties property = new Properties();
+        
+        try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
+            property.load(in);
+        }
+        
+        try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
+            property.setProperty(id, Integer.toString(time));
             
             property.store(output, null);
         }
