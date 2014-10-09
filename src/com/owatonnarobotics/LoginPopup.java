@@ -125,9 +125,19 @@ public class LoginPopup extends javax.swing.JFrame {
     private void inOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inOutButtonActionPerformed
         if(inOutButton.getText().equals("Out")){
             try {
-                LoginManager.signOut(user.getId());
+                int loginTime = LoginManager.signOut(user.getId());
+                int totalWorkTime = currentTimeMinutes() - loginTime;
+                ExcelManager.setTotalWorkTime(user.getId(), totalWorkTime);
                 this.dispose();
             } catch (IOException ex) {
+                Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(inOutButton.getText().equals("In")){
+            try {
+                LoginManager.signIn(user.getId(), currentTimeMinutes());
+                this.dispose();
+            } catch(IOException ex) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -158,7 +168,7 @@ public class LoginPopup extends javax.swing.JFrame {
         } catch (NullPointerException ex) {
             try {
                 // If user doesn't exist in properties, create new user logged out
-                LoginManager.signOut(user.getId());
+                LoginManager.createUser(user.getId());
                 inOutButton.setText("Out");
             } catch (IOException ex1) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex1);
@@ -168,6 +178,10 @@ public class LoginPopup extends javax.swing.JFrame {
             Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             inOutButton.setText("Error");
         }
+    }
+    
+    private int currentTimeMinutes(){
+        return calendar.get(Calendar.HOUR) * 60 + calendar.get(Calendar.MINUTE);
     }
     
     private User user;
