@@ -8,6 +8,8 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import jxl.write.WritableCell;
+import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 /**
@@ -15,7 +17,7 @@ import jxl.write.WritableWorkbook;
  * @author Eson
  */
 public class ExcelManager {
-    private static final String excelLocation = "time_log.xls";
+    private static final String EXCEL_LOCATION = "time_log.xls";
     
     // Lists the different column values
     private static final int ID_COLUMN = 0;
@@ -32,7 +34,7 @@ public class ExcelManager {
     
     // Returns a new user given the id
     public static User getUser(String id) throws IOException, BiffException{
-        Workbook workbook = Workbook.getWorkbook(new File(excelLocation));
+        Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
         
         Sheet sheet = workbook.getSheet(0);
         
@@ -54,14 +56,14 @@ public class ExcelManager {
     
     // Sets the user's time for the given day
     public static void setTotalWorkTime(String id, int totalTime) throws IOException, BiffException{
-        Workbook workbook = Workbook.getWorkbook(new File(excelLocation));
+        Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
         
         Sheet sheet = workbook.getSheet(0);
         
         int currentColumn = getCurrentDayColumn(id, sheet);
         
         if(currentColumn == 0){
-            writeNewDate(sheet);
+            writeNewDate(workbook);
         }
     }
     
@@ -83,8 +85,12 @@ public class ExcelManager {
     }
     
     // Writes the current date onto the sheet
-    private static void writeNewDate(Sheet sheet){
+    private static void writeNewDate(Workbook workbook) throws IOException{
+        WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
         
+        WritableSheet sheet = writeBook.getSheet(0);
+        
+        WritableCell cell = sheet.getWritableCell(sheet.getColumns(), NAMES_ROW);
     }
     
     // Returns an array with the current date in month, day, year form
