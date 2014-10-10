@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jxl.read.biff.BiffException;
 
 /**
  *
@@ -130,6 +131,8 @@ public class LoginPopup extends javax.swing.JFrame {
                 ExcelManager.setTotalWorkTime(user.getId(), totalWorkTime);
                 this.dispose();
             } catch (IOException ex) {
+                Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (BiffException ex) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

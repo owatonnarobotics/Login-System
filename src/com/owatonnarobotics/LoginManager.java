@@ -27,6 +27,7 @@ public class LoginManager {
         }
     }
     
+    // Creates a user in the properties file
     public static void createUser(String id) throws FileNotFoundException, IOException{
         Properties property = new Properties();
         

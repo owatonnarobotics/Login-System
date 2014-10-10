@@ -2,6 +2,8 @@ package com.owatonnarobotics;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -15,7 +17,7 @@ import jxl.write.WritableWorkbook;
 public class ExcelManager {
     private static final String excelLocation = "time_log.xls";
     
-    //Lists the different column values
+    // Lists the different column values
     private static final int ID_COLUMN = 0;
     private static final int FIRST_NAME_COLUMN = 1;
     private static final int LAST_NAME_COLUMN = 2;
@@ -23,7 +25,10 @@ public class ExcelManager {
     private static final int TOTAL_TIME_COLUMN = 5;
     private static final int DATES_START_COLUMN = 8;
     
-    private static final int rowStart = 2;
+    // Lists the different row values
+    private static final int NAMES_ROW = 0;
+    private static final int START_ROW = 2;
+    
     
     // Returns a new user given the id
     public static User getUser(String id) throws IOException, BiffException{
@@ -31,8 +36,8 @@ public class ExcelManager {
         
         Sheet sheet = workbook.getSheet(0);
         
-        for(int currentRow = rowStart; currentRow < sheet.getRows(); currentRow ++){
-            Cell cell = sheet.getCell(0, currentRow);
+        for(int currentRow = START_ROW; currentRow < sheet.getRows(); currentRow++){
+            Cell cell = sheet.getCell(ID_COLUMN, currentRow);
             if(cell.getContents().equals(id)){
                 String fName = sheet.getCell(FIRST_NAME_COLUMN, currentRow).getContents();
                 String lName = sheet.getCell(LAST_NAME_COLUMN, currentRow).getContents();
@@ -45,5 +50,53 @@ public class ExcelManager {
         
         workbook.close();
         return null;
+    }
+    
+    // Sets the user's time for the given day
+    public static void setTotalWorkTime(String id, int totalTime) throws IOException, BiffException{
+        Workbook workbook = Workbook.getWorkbook(new File(excelLocation));
+        
+        Sheet sheet = workbook.getSheet(0);
+        
+        int currentColumn = getCurrentDayColumn(id, sheet);
+        
+        if(currentColumn == 0){
+            writeNewDate(sheet);
+        }
+    }
+    
+    // Find the column of the current day. If one doesn't exist, returns 0
+    private static int getCurrentDayColumn(String id, Sheet sheet){
+        
+        String[] currentDateArray = getCurrentDate();
+        
+        for(int currentColumn = DATES_START_COLUMN; currentColumn < sheet.getColumns(); currentColumn++){
+            Cell cell = sheet.getCell(currentColumn, NAMES_ROW);
+            String date = cell.getContents();
+            String[] dateArray = date.split("/");
+            
+            if(Arrays.equals(dateArray, currentDateArray)){
+                return currentColumn;
+            }
+        }
+        return 0;
+    }
+    
+    // Writes the current date onto the sheet
+    private static void writeNewDate(Sheet sheet){
+        
+    }
+    
+    // Returns an array with the current date in month, day, year form
+    private static String[] getCurrentDate(){
+        GregorianCalendar calendar = new GregorianCalendar();
+        
+        String[] dateArray = new String[3];
+        
+        dateArray[0] = Integer.toString(calendar.get(GregorianCalendar.MONTH) + 1);
+        dateArray[1] = Integer.toString(calendar.get(GregorianCalendar.DAY_OF_MONTH));
+        dateArray[2] = Integer.toString(calendar.get(GregorianCalendar.YEAR));
+        
+        return dateArray;
     }
 }
