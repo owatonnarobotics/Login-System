@@ -7,8 +7,9 @@ package com.owatonnarobotics;
 public class User {
     private String firstName;
     private String lastName;
-    private String id;
     private int totalTime;
+    // A 3 digit id
+    private String id;
 
     public String getFirstName() {
         return firstName;

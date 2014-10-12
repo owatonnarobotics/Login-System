@@ -16,7 +16,7 @@ public class LoginManager {
     
     private static final String PROP_LOCATION = "login.properties";
     
-    // Tells if the user is signed in
+    // Returns true if user is signed in, false if user is not
     public static boolean userSignedIn(String id) throws FileNotFoundException, IOException{
         
         Properties property = new Properties();
@@ -27,7 +27,7 @@ public class LoginManager {
         }
     }
     
-    // Creates a user in the properties file
+    // Creates a user in the properties file, sets user to our automatically
     public static void createUser(String id) throws FileNotFoundException, IOException{
         Properties property = new Properties();
         
@@ -60,7 +60,7 @@ public class LoginManager {
         }
     }
     
-    // Signs a user in through the properties file
+    // Writes the time to a user key in a properties file
     public static void signIn(String id, int time) throws FileNotFoundException, IOException {
         
         Properties property = new Properties();
