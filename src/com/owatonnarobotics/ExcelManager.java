@@ -72,7 +72,7 @@ public class ExcelManager {
         }
     }
     
-    // Find the column of the current day. If one doesn't exist, returns 0
+    // Find the column of the current day, if one doesn't exist, returns 0
     private static int getCurrentDayColumn(String id, Sheet sheet){
         
         String[] currentDateArray = getCurrentDate();
@@ -89,7 +89,7 @@ public class ExcelManager {
         return 0;
     }
     
-    // Writes the current date onto the sheet
+    // Writes the current date onto the sheet in the next empty column
     private static void writeNewDate(Workbook workbook) throws IOException{
         try {
             WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
