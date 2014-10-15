@@ -4,13 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import jxl.write.Label;
 import jxl.write.WritableCell;
+import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 /**
  *
@@ -86,11 +91,21 @@ public class ExcelManager {
     
     // Writes the current date onto the sheet
     private static void writeNewDate(Workbook workbook) throws IOException{
-        WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
-        
-        WritableSheet sheet = writeBook.getSheet(0);
-        
-        WritableCell cell = sheet.getWritableCell(sheet.getColumns(), NAMES_ROW);
+        try {
+            WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
+            WritableSheet sheet = writeBook.getSheet(0);
+            
+            //WritableCell cell = sheet.getWritableCell(sheet.getColumns(), NAMES_ROW);
+            
+            Label label = new Label(sheet.getColumns(), NAMES_ROW, getCurrentDateString());
+            
+            sheet.addCell(label);
+            
+            writeBook.write();
+            writeBook.close();
+        } catch (WriteException ex) {
+            Logger.getLogger(ExcelManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     // Returns an array with the current date in month, day, year form
@@ -104,5 +119,16 @@ public class ExcelManager {
         dateArray[2] = Integer.toString(calendar.get(GregorianCalendar.YEAR));
         
         return dateArray;
+    }
+    
+    // Returns a string of the current date
+    private static String getCurrentDateString(){
+        GregorianCalendar calendar = new GregorianCalendar();
+
+        int month = calendar.get(GregorianCalendar.MONTH) + 1;
+        int day = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+        int year = calendar.get(GregorianCalendar.YEAR);
+        
+        return month + "/" + day + "/" + year;
     }
 }
