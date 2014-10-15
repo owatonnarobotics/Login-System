@@ -65,7 +65,7 @@ public class ExcelManager {
         
         Sheet sheet = workbook.getSheet(0);
         
-        int currentColumn = getCurrentDayColumn(id, sheet);
+        int currentColumn = getCurrentDayColumn(sheet);
         
         if(currentColumn == 0){
             writeNewDate(workbook);
@@ -73,11 +73,12 @@ public class ExcelManager {
     }
     
     // Find the column of the current day, if one doesn't exist, returns 0
-    private static int getCurrentDayColumn(String id, Sheet sheet){
+    private static int getCurrentDayColumn(Sheet sheet){
         
         String[] currentDateArray = getCurrentDate();
         
         for(int currentColumn = DATES_START_COLUMN; currentColumn < sheet.getColumns(); currentColumn++){
+            
             Cell cell = sheet.getCell(currentColumn, NAMES_ROW);
             String date = cell.getContents();
             String[] dateArray = date.split("/");
@@ -95,14 +96,13 @@ public class ExcelManager {
             WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
             WritableSheet sheet = writeBook.getSheet(0);
             
-            //WritableCell cell = sheet.getWritableCell(sheet.getColumns(), NAMES_ROW);
-            
             Label label = new Label(sheet.getColumns(), NAMES_ROW, getCurrentDateString());
             
             sheet.addCell(label);
             
             writeBook.write();
             writeBook.close();
+            
         } catch (WriteException ex) {
             Logger.getLogger(ExcelManager.class.getName()).log(Level.SEVERE, null, ex);
         }
