@@ -16,6 +16,7 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import sun.applet.Main;
 
 /**
  *
@@ -68,8 +69,33 @@ public class ExcelManager {
         int currentColumn = getCurrentDayColumn(sheet);
         
         if(currentColumn == 0){
-            writeNewDate(workbook);
+            currentColumn = sheet.getColumns();
+            writeCell(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), workbook);
         }
+        
+        int currentRow = getUserRow(id, sheet);
+        
+        System.out.println(currentColumn);
+        System.out.println(currentRow);
+        Cell cell = sheet.getCell(currentColumn, currentRow);
+        
+        if(! cell.getContents().equals("")){
+            int currentWorkTime = Integer.getInteger(cell.getContents());
+            totalTime += currentWorkTime;
+        }
+        
+        writeCell(currentColumn, currentRow, Integer.toString(totalTime), workbook);
+    }
+    
+    // Finds the row that the user is in
+    private static int getUserRow(String id, Sheet sheet){
+        for(int currentRow = START_ROW; currentRow < sheet.getRows(); currentRow++){
+            Cell cell = sheet.getCell(ID_COLUMN, currentRow);
+            if(cell.getContents().equals(id)){
+                return currentRow;
+            }
+        }
+        return 0;
     }
     
     // Find the column of the current day, if one doesn't exist, returns 0
@@ -90,13 +116,13 @@ public class ExcelManager {
         return 0;
     }
     
-    // Writes the current date onto the sheet in the next empty column
-    private static void writeNewDate(Workbook workbook) throws IOException{
+    // Writes the cell with text at the row and column specified 
+    private static void writeCell(int column, int row, String text, Workbook workbook) throws IOException{
         try {
             WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
             WritableSheet sheet = writeBook.getSheet(0);
             
-            Label label = new Label(sheet.getColumns(), NAMES_ROW, getCurrentDateString());
+            Label label = new Label(column, row, text);
             
             sheet.addCell(label);
             
@@ -130,5 +156,9 @@ public class ExcelManager {
         int year = calendar.get(GregorianCalendar.YEAR);
         
         return month + "/" + day + "/" + year;
+    }
+    
+    public static void main(String[] args) throws IOException, BiffException, WriteException{
+        setTotalWorkTime("314", 100);
     }
 }
