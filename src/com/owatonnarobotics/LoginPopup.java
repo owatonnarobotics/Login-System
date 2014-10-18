@@ -184,7 +184,7 @@ public class LoginPopup extends javax.swing.JFrame {
     }
     
     private int currentTimeMinutes(){
-        return calendar.get(Calendar.HOUR) * 60 + calendar.get(Calendar.MINUTE);
+        return calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
     }
     
     private User user;
