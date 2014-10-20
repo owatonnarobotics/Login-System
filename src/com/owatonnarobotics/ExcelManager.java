@@ -16,6 +16,7 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import jxl.write.Number;
 import sun.applet.Main;
 
 /**
@@ -70,21 +71,20 @@ public class ExcelManager {
         
         if(currentColumn == 0){
             currentColumn = sheet.getColumns();
-            writeCell(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), workbook);
+            writeCellLabel(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), workbook);
         }
         
         int currentRow = getUserRow(id, sheet);
         
-        System.out.println(currentColumn);
-        System.out.println(currentRow);
-        Cell cell = sheet.getCell(currentColumn, currentRow);
-        
-        if(! cell.getContents().equals("")){
-            int currentWorkTime = Integer.getInteger(cell.getContents());
+        try{
+            Cell cell = sheet.getCell(currentColumn, currentRow);
+            int currentWorkTime = Integer.parseInt(cell.getContents());
             totalTime += currentWorkTime;
+        } catch(Exception e){
+            // Not a number, continue on
         }
         
-        writeCell(currentColumn, currentRow, Integer.toString(totalTime), workbook);
+        writeCellNumber(currentColumn, currentRow, totalTime, workbook);
     }
     
     // Finds the row that the user is in
@@ -117,7 +117,7 @@ public class ExcelManager {
     }
     
     // Writes the cell with text at the row and column specified 
-    private static void writeCell(int column, int row, String text, Workbook workbook) throws IOException{
+    private static void writeCellLabel(int column, int row, String text, Workbook workbook) throws IOException{
         try {
             WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
             WritableSheet sheet = writeBook.getSheet(0);
@@ -125,6 +125,24 @@ public class ExcelManager {
             Label label = new Label(column, row, text);
             
             sheet.addCell(label);
+            
+            writeBook.write();
+            writeBook.close();
+            
+        } catch (WriteException ex) {
+            Logger.getLogger(ExcelManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Writes the cell with a number at the row and column specified 
+    private static void writeCellNumber(int column, int row, double number, Workbook workbook) throws IOException{
+        try {
+            WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
+            WritableSheet sheet = writeBook.getSheet(0);
+            
+            Number num = new Number(column, row, number);
+            
+            sheet.addCell(num);
             
             writeBook.write();
             writeBook.close();
@@ -156,9 +174,5 @@ public class ExcelManager {
         int year = calendar.get(GregorianCalendar.YEAR);
         
         return month + "/" + day + "/" + year;
-    }
-    
-    public static void main(String[] args) throws IOException, BiffException, WriteException{
-        setTotalWorkTime("314", 100);
     }
 }
