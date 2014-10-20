@@ -27,7 +27,7 @@ public class LoginManager {
         }
     }
     
-    // Creates a user in the properties file, sets user to our automatically
+    // Creates a user in the properties file, sets user to out automatically
     public static void createUser(String id) throws FileNotFoundException, IOException{
         Properties property = new Properties();
         
@@ -52,9 +52,8 @@ public class LoginManager {
         }
         
         try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
-            int time = Integer.getInteger(property.getProperty(id));
+            int time = Integer.parseInt(property.getProperty(id));
             property.setProperty(id, "out");
-            
             property.store(output, null);
             return time;
         }
