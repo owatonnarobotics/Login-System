@@ -117,9 +117,11 @@ public class LoginScreen extends javax.swing.JFrame {
                 popup.setVisible(true);
                 
             } catch (IOException ex) {
+                ex.printStackTrace();
                 errorLabel.setText("Error: IOException in LoginScreen");
             } catch (BiffException ex) {
-                errorLabel.setText("Error: BiffException in LoginScreen");
+                ex.printStackTrace();
+                errorLabel.setText("Error: Excel File Probably Not There");
             }
         }
     }//GEN-LAST:event_okButtonActionPerformed

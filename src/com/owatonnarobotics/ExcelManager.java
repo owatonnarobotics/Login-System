@@ -76,6 +76,10 @@ public class ExcelManager {
         
         int currentRow = getUserRow(id, sheet);
         
+        // Time that we added today, used for totalTime later
+        int totalTodayTime = totalTime;
+        
+        // Sets today's time
         try{
             Cell cell = sheet.getCell(currentColumn, currentRow);
             int currentWorkTime = Integer.parseInt(cell.getContents());
@@ -84,7 +88,20 @@ public class ExcelManager {
             // Not a number, continue on
         }
         
+        System.out.println(currentColumn);
+        System.out.println(currentRow);
         writeCellNumber(currentColumn, currentRow, totalTime, workbook);
+        
+        // Sets total time
+        try{
+            Cell cell = sheet.getCell(TOTAL_TIME_COLUMN, currentRow);
+            int currentTotalWorkTime = Integer.parseInt(cell.getContents());
+            totalTodayTime += currentTotalWorkTime;
+        } catch(Exception e){
+            // Not a number, continue on
+        }
+        writeCellNumber(TOTAL_TIME_COLUMN, currentRow, totalTodayTime, workbook);
+        workbook.close();
     }
     
     // Finds the row that the user is in

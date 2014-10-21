@@ -47,6 +47,10 @@ public class LoginPopup extends javax.swing.JFrame {
         lNameLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
         timeWeekLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -74,6 +78,14 @@ public class LoginPopup extends javax.swing.JFrame {
 
         timeWeekLabel.setText("X hours");
 
+        jLabel1.setText("First Name:");
+
+        jLabel2.setText("Last Name:");
+
+        jLabel3.setText("Time Today:");
+
+        jLabel4.setText("Total Time:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,17 +97,22 @@ public class LoginPopup extends javax.swing.JFrame {
                         .addComponent(inOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fNameLabel)
-                            .addComponent(lNameLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(timeWeekLabel))
-                            .addComponent(timeLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeWeekLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fNameLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lNameLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeLabel)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -104,12 +121,20 @@ public class LoginPopup extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fNameLabel)
-                    .addComponent(timeLabel))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lNameLabel)
-                    .addComponent(timeWeekLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeLabel)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timeWeekLabel)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inOutButton)
                     .addComponent(cancelButton))
@@ -126,13 +151,9 @@ public class LoginPopup extends javax.swing.JFrame {
     private void inOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inOutButtonActionPerformed
         if(inOutButton.getText().equals("Out")){
             try {
-                int loginTime = LoginManager.signOut(user.getId());
-                int totalWorkTime = currentTimeMinutes() - loginTime;
                 ExcelManager.setTotalWorkTime(user.getId(), totalWorkTime);
                 this.dispose();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (BiffException ex) {
+            } catch (IOException | BiffException ex) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -155,18 +176,19 @@ public class LoginPopup extends javax.swing.JFrame {
             formatTime += "0";
         }
         
-        timeLabel.setText("Time: " + calendar.get(Calendar.HOUR) + ":" + formatTime);
         // If there are minutes (not just hours), set the String to those minutes
-        String minutes = (user.getTotalTime() % 60 == 0) ? "" : user.getTotalTime() % 60 + "M";
-        // Ex: 2H 5M
-        timeWeekLabel.setText(Integer.toString(user.getTotalTime() / 60) + "H " + minutes);
+        timeWeekLabel.setText(prettyTime(user.getTotalTime()));
         
         try {
             if(LoginManager.userSignedIn(user.getId())){
                 inOutButton.setText("Out");
+                int loginTime = LoginManager.getInTime(user.getId());
+                totalWorkTime = currentTimeMinutes() - loginTime;
+                timeLabel.setText(prettyTime(totalWorkTime));
             }
             else{
                 inOutButton.setText("In");
+                timeLabel.setText("0H 0M");
             }
         } catch (NullPointerException ex) {
             try {
@@ -187,13 +209,23 @@ public class LoginPopup extends javax.swing.JFrame {
         return calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
     }
     
+    private String prettyTime(int time){
+        String minutes = (time % 60 == 0) ? "" : time % 60 + "M";
+        return Integer.toString(time / 60) + "H " + minutes;
+    }
+    
     private User user;
     private GregorianCalendar calendar;
+    private int totalWorkTime;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel fNameLabel;
     private javax.swing.JButton inOutButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lNameLabel;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel timeWeekLabel;
