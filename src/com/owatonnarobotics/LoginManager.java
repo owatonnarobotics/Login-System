@@ -42,8 +42,8 @@ public class LoginManager {
         }
     }
     
-    // Signs out a user and returns the inital time they signed in
-    public static int signOut(String id) throws FileNotFoundException, IOException{
+    // Signs out a user
+    public static void signOut(String id) throws FileNotFoundException, IOException{
         
         Properties property = new Properties();
         
@@ -52,10 +52,8 @@ public class LoginManager {
         }
         
         try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
-            int time = Integer.parseInt(property.getProperty(id));
             property.setProperty(id, "out");
             property.store(output, null);
-            return time;
         }
     }
     
