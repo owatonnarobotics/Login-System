@@ -59,6 +59,18 @@ public class LoginManager {
         }
     }
     
+    // Returns the time the user signed in
+    public static int getInTime(String id) throws FileNotFoundException, IOException{
+        
+        Properties property = new Properties();
+        
+        try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
+            property.load(in);
+            
+            return Integer.parseInt(property.getProperty(id));
+        }
+    }
+    
     // Writes the time to a user key in a properties file
     public static void signIn(String id, int time) throws FileNotFoundException, IOException {
         
