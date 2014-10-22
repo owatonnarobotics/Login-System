@@ -17,7 +17,6 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.Number;
-import sun.applet.Main;
 
 /**
  *
@@ -71,12 +70,7 @@ public class ExcelManager {
         
         Sheet sheet = workbook.getSheet(0);
         
-        int currentColumn = getCurrentDayColumn(sheet);
-        
-        if(currentColumn == 0){
-            currentColumn = sheet.getColumns();
-            writeCellLabel(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), writeBook);
-        }
+        int currentColumn = getSetCurrentDayColumn(sheet, writeBook, getCurrentDateString());
         
         int currentRow = getUserRow(id, sheet);
         
@@ -122,8 +116,8 @@ public class ExcelManager {
         return 0;
     }
     
-    // Find the column of the current day, if one doesn't exist, returns 0
-    private static int getCurrentDayColumn(Sheet sheet){
+    // Find the column of the current day, if one doesn't exist set last empty one to date
+    private static int getSetCurrentDayColumn(Sheet sheet, WritableWorkbook writeBook, String todayDate) throws IOException{
         
         String[] currentDateArray = getCurrentDate();
         
@@ -132,6 +126,11 @@ public class ExcelManager {
             Cell cell = sheet.getCell(currentColumn, NAMES_ROW);
             String date = cell.getContents();
             String[] dateArray = date.split("/");
+            
+            if(date.equals("")){
+                writeCellLabel(currentColumn, NAMES_ROW, todayDate, writeBook);
+                return currentColumn;
+            }
             
             if(Arrays.equals(dateArray, currentDateArray)){
                 return currentColumn;
