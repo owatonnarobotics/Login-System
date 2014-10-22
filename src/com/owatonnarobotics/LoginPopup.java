@@ -26,6 +26,7 @@ public class LoginPopup extends javax.swing.JFrame {
      */
     public LoginPopup(User user) {
         initComponents();
+        this.getRootPane().setDefaultButton(inOutButton);
         
         this.user = user;
         this.calendar = new GregorianCalendar();
@@ -54,8 +55,10 @@ public class LoginPopup extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Log In/Out");
         setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setResizable(false);
 
         inOutButton.setText("Out");
         inOutButton.addActionListener(new java.awt.event.ActionListener() {
