@@ -53,10 +53,14 @@ public class ExcelManager {
             if(cell.getContents().equals(id)){
                 String fName = sheet.getCell(FIRST_NAME_COLUMN, currentRow).getContents();
                 String lName = sheet.getCell(LAST_NAME_COLUMN, currentRow).getContents();
+                String grade = sheet.getCell(GRADE_COLUMN, currentRow).getContents();
+                String team = sheet.getCell(TEAM_COLUMN, currentRow).getContents();
+                String phone = sheet.getCell(PHONE_COLUMN, currentRow).getContents();
+                String email = sheet.getCell(EMAIL_COLUMN, currentRow).getContents();
                 int totalTime = Integer.parseInt(sheet.getCell(TOTAL_TIME_COLUMN, currentRow).getContents());
                 
                 workbook.close();
-                return new User(fName, lName, id, totalTime);
+                return new User(fName, lName, id, grade, team, phone, email, totalTime);
             }
         }
         
