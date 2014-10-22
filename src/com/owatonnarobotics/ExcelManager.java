@@ -62,8 +62,9 @@ public class ExcelManager {
     }
     
     // Sets the user's time for the given day
-    public static void setTotalWorkTime(String id, int totalTime) throws IOException, BiffException{
+    public static void setTotalWorkTime(String id, int totalTime) throws IOException, BiffException, WriteException{
         Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
+        WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
         
         Sheet sheet = workbook.getSheet(0);
         
@@ -71,7 +72,7 @@ public class ExcelManager {
         
         if(currentColumn == 0){
             currentColumn = sheet.getColumns();
-            writeCellLabel(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), workbook);
+            writeCellLabel(sheet.getColumns(), NAMES_ROW, getCurrentDateString(), writeBook);
         }
         
         int currentRow = getUserRow(id, sheet);
@@ -88,10 +89,6 @@ public class ExcelManager {
             // Not a number, continue on
         }
         
-        System.out.println(currentColumn);
-        System.out.println(currentRow);
-        writeCellNumber(currentColumn, currentRow, totalTime, workbook);
-        
         // Sets total time
         try{
             Cell cell = sheet.getCell(TOTAL_TIME_COLUMN, currentRow);
@@ -100,7 +97,14 @@ public class ExcelManager {
         } catch(Exception e){
             // Not a number, continue on
         }
-        writeCellNumber(TOTAL_TIME_COLUMN, currentRow, totalTodayTime, workbook);
+        
+        // Adds onto the total time column
+        writeCellNumber(TOTAL_TIME_COLUMN, currentRow, totalTodayTime, writeBook);
+        // Writes the total amount of minutes today
+        writeCellNumber(currentColumn, currentRow, totalTime, writeBook);
+        
+        writeBook.write();
+        writeBook.close();
         workbook.close();
     }
     
@@ -134,17 +138,13 @@ public class ExcelManager {
     }
     
     // Writes the cell with text at the row and column specified 
-    private static void writeCellLabel(int column, int row, String text, Workbook workbook) throws IOException{
+    private static void writeCellLabel(int column, int row, String text, WritableWorkbook writeBook) throws IOException{
         try {
-            WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
             WritableSheet sheet = writeBook.getSheet(0);
             
             Label label = new Label(column, row, text);
             
             sheet.addCell(label);
-            
-            writeBook.write();
-            writeBook.close();
             
         } catch (WriteException ex) {
             Logger.getLogger(ExcelManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,17 +152,12 @@ public class ExcelManager {
     }
     
     // Writes the cell with a number at the row and column specified 
-    private static void writeCellNumber(int column, int row, double number, Workbook workbook) throws IOException{
+    private static void writeCellNumber(int column, int row, double number, WritableWorkbook writeBook) throws IOException{
         try {
-            WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
             WritableSheet sheet = writeBook.getSheet(0);
-            
             Number num = new Number(column, row, number);
             
             sheet.addCell(num);
-            
-            writeBook.write();
-            writeBook.close();
             
         } catch (WriteException ex) {
             Logger.getLogger(ExcelManager.class.getName()).log(Level.SEVERE, null, ex);
