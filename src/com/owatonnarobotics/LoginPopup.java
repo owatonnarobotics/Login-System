@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
 
 /**
  *
@@ -152,8 +153,9 @@ public class LoginPopup extends javax.swing.JFrame {
         if(inOutButton.getText().equals("Out")){
             try {
                 ExcelManager.setTotalWorkTime(user.getId(), totalWorkTime);
+                LoginManager.signOut(user.getId());
                 this.dispose();
-            } catch (IOException | BiffException ex) {
+            } catch (IOException | BiffException | WriteException ex) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -210,7 +212,7 @@ public class LoginPopup extends javax.swing.JFrame {
     }
     
     private String prettyTime(int time){
-        String minutes = (time % 60 == 0) ? "" : time % 60 + "M";
+        String minutes = time % 60 + "M";
         return Integer.toString(time / 60) + "H " + minutes;
     }
     
