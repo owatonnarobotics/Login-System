@@ -1,5 +1,7 @@
 package com.owatonnarobotics;
 
+import java.util.Random;
+
 /**
  * A user signing in and out of the database
  * @author Eson
@@ -41,6 +43,16 @@ public class User {
     
     public void setTotalTime(int totalTime){
         this.totalTime = totalTime;
+    }
+    
+    // Generates a random ID
+    public static String randomID(Random random){
+        
+        String randomNum1 = Integer.toString(random.nextInt(10));
+        String randomNum2 = Integer.toString(random.nextInt(10));
+        String randomNum3 = Integer.toString(random.nextInt(10));
+        
+        return randomNum1 + randomNum2 + randomNum3;
     }
     
     public User(String firstName, String lastName, String id, int totalTime){

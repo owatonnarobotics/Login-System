@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jxl.Cell;
@@ -61,6 +62,20 @@ public class ExcelManager {
         
         workbook.close();
         return null;
+    }
+    
+    // Returns a random open 3 digit id
+    public static String getFreeID() throws IOException, BiffException{
+        
+        Random rand = new Random();
+        
+        String randomID = User.randomID(rand);
+        
+        while(getUser(randomID) != null){
+            randomID = User.randomID(rand);
+        }
+        
+        return randomID;
     }
     
     // Sets the user's time for the given day
