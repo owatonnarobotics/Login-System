@@ -31,10 +31,12 @@ public class LoginScreen extends javax.swing.JFrame {
         errorLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        newUserMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login System");
+        setResizable(false);
 
         userLabel.setText("User ID");
 
@@ -56,8 +58,13 @@ public class LoginScreen extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        jMenuItem1.setText("New User");
-        fileMenu.add(jMenuItem1);
+        newUserMenuItem.setText("New User");
+        newUserMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newUserMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(newUserMenuItem);
 
         exitMenuItem.setText("Exit");
         fileMenu.add(exitMenuItem);
@@ -122,7 +129,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 errorLabel.setText("");
                 idTextField.setText("");
                 LoginPopup popup = new LoginPopup(newUser);
-                popup.setBounds(this.getX() + 120, this.getY() + 120, popup.getWidth(), popup.getHeight());
+                popup.setBounds(this.getX() + 120, this.getY() + 80, popup.getWidth(), popup.getHeight());
                 popup.setVisible(true);
                 
             } catch (IOException ex) {
@@ -138,6 +145,12 @@ public class LoginScreen extends javax.swing.JFrame {
     private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
         okButtonActionPerformed(evt);
     }//GEN-LAST:event_idTextFieldActionPerformed
+
+    private void newUserMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUserMenuItemActionPerformed
+        UserCreator creator = new UserCreator();
+        creator.setBounds(this.getX() + 120, this.getY() + 30, creator.getWidth(), creator.getHeight());
+        creator.setVisible(true);
+    }//GEN-LAST:event_newUserMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,7 +193,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField idTextField;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem newUserMenuItem;
     private javax.swing.JButton okButton;
     private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables
