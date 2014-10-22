@@ -6,6 +6,11 @@
 
 package com.owatonnarobotics;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jxl.read.biff.BiffException;
+
 /**
  *
  * @author Eson
@@ -17,6 +22,14 @@ public class UserCreator extends javax.swing.JFrame {
      */
     public UserCreator() {
         initComponents();
+        
+        try {
+            id = ExcelManager.getFreeID();
+        } catch (IOException | BiffException ex) {
+            okButton.setText("Error");
+            Logger.getLogger(UserCreator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        idLabel.setText(id);
     }
 
     /**
@@ -29,7 +42,7 @@ public class UserCreator extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        nameTextField = new javax.swing.JTextField();
+        fNameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         teamComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
@@ -42,11 +55,13 @@ public class UserCreator extends javax.swing.JFrame {
         idLabel = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        nameTextField1 = new javax.swing.JTextField();
+        lNameTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("New User");
+        setResizable(false);
 
         jLabel1.setText("First Name:");
 
@@ -69,8 +84,18 @@ public class UserCreator extends javax.swing.JFrame {
         idLabel.setToolTipText("Remember this!");
 
         okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Last Name:");
 
@@ -90,13 +115,13 @@ public class UserCreator extends javax.swing.JFrame {
                         .addComponent(jLabel8))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(gradeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nameTextField)
+                    .addComponent(fNameTextField)
                     .addComponent(teamComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nameTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lNameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(phoneTextField)
                     .addComponent(emailTextField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -122,11 +147,11 @@ public class UserCreator extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,44 +184,35 @@ public class UserCreator extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserCreator().setVisible(true);
-            }
-        });
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        if(inputsCorrect().equals("yes")){
+            
+        }
+        else{
+            
+        }
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    // Checks all the the text boxes to make sure inputs are there and correctly formatted,
+    // returns error text if not or returns yes if correctly formated
+    private String inputsCorrect(){
+        if(fNameTextField.getText().equals("") || lNameTextField.getText().equals("") || 
+           phoneTextField.getText().equals("") || emailTextField.getText().equals("")){
+            return "Empty Box";
+        }
+        return "yes";
     }
 
+    private String id;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField emailTextField;
+    private javax.swing.JTextField fNameTextField;
     private javax.swing.JComboBox gradeComboBox;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel jLabel1;
@@ -207,8 +223,7 @@ public class UserCreator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField nameTextField;
-    private javax.swing.JTextField nameTextField1;
+    private javax.swing.JTextField lNameTextField;
     private javax.swing.JButton okButton;
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JComboBox teamComboBox;
