@@ -30,9 +30,12 @@ public class ExcelManager {
     private static final int ID_COLUMN = 0;
     private static final int FIRST_NAME_COLUMN = 1;
     private static final int LAST_NAME_COLUMN = 2;
-    private static final int TEAM_COLUMN = 3;
-    private static final int TOTAL_TIME_COLUMN = 5;
-    private static final int DATES_START_COLUMN = 8;
+    private static final int GRADE_COLUMN = 3;
+    private static final int TEAM_COLUMN = 4;
+    private static final int PHONE_COLUMN = 5;
+    private static final int EMAIL_COLUMN = 6;
+    private static final int TOTAL_TIME_COLUMN = 8;
+    private static final int DATES_START_COLUMN = 11;
     
     // Lists the different row values
     private static final int NAMES_ROW = 0;
