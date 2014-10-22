@@ -31,6 +31,7 @@ public class LoginScreen extends javax.swing.JFrame {
         errorLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -38,6 +39,11 @@ public class LoginScreen extends javax.swing.JFrame {
         userLabel.setText("User ID");
 
         idTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idTextFieldActionPerformed(evt);
+            }
+        });
 
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -49,6 +55,9 @@ public class LoginScreen extends javax.swing.JFrame {
         errorLabel.setForeground(new java.awt.Color(255, 0, 51));
 
         fileMenu.setText("File");
+
+        jMenuItem1.setText("New User");
+        fileMenu.add(jMenuItem1);
 
         exitMenuItem.setText("Exit");
         fileMenu.add(exitMenuItem);
@@ -126,6 +135,10 @@ public class LoginScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_okButtonActionPerformed
 
+    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
+        okButtonActionPerformed(evt);
+    }//GEN-LAST:event_idTextFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,6 +180,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField idTextField;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JButton okButton;
     private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables
