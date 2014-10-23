@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jxl.read.biff.BiffException;
+import jxl.write.WriteException;
 
 /**
  *
@@ -101,9 +103,17 @@ public class ForceLogoutScreen extends javax.swing.JFrame {
         if(Arrays.equals(passwordField.getPassword(), "maybe".toCharArray())){
             try {
                 ArrayList<String> users = LoginManager.signAllUsersOut();
-                
-                for(String user : users){
-                    System.out.println(user);
+                try {
+                    for(String id : users){
+                        User user;
+
+                        user = ExcelManager.getUser(id);
+                        ExcelManager.setTotalWorkTime(user, 60);
+                    }              
+                    this.dispose();
+                }catch (BiffException | WriteException ex) {
+                        okButton.setText("Error");
+                        Logger.getLogger(ForceLogoutScreen.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (IOException ex) {
                 okButton.setText("Error");

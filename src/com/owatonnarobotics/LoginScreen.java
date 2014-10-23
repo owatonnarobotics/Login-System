@@ -69,7 +69,7 @@ public class LoginScreen extends javax.swing.JFrame {
         });
         fileMenu.add(newUserMenuItem);
 
-        exitMenuItem.setText("Exit");
+        exitMenuItem.setText("Logout");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
