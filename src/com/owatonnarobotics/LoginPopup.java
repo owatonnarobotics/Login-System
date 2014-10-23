@@ -155,7 +155,7 @@ public class LoginPopup extends javax.swing.JFrame {
     private void inOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inOutButtonActionPerformed
         if(inOutButton.getText().equals("Out")){
             try {
-                ExcelManager.setTotalWorkTime(user.getId(), totalWorkTime);
+                ExcelManager.setTotalWorkTime(user, totalWorkTime);
                 LoginManager.signOut(user.getId());
                 this.dispose();
             } catch (IOException | BiffException | WriteException ex) {
@@ -199,7 +199,8 @@ public class LoginPopup extends javax.swing.JFrame {
             try {
                 // If user doesn't exist in properties, create new user logged out
                 LoginManager.createUser(user.getId());
-                inOutButton.setText("Out");
+                inOutButton.setText("In");
+                timeLabel.setText("0H 0M");
             } catch (IOException ex1) {
                 Logger.getLogger(LoginPopup.class.getName()).log(Level.SEVERE, null, ex1);
                 inOutButton.setText("Error");

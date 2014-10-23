@@ -76,7 +76,7 @@ public class ExcelManager {
         Sheet sheet = workbook.getSheet(0);
         int row = sheet.getRows();
         
-        writeCellNumber(ID_COLUMN, row, Integer.parseInt(user.getId()), writeBook);
+        writeCellLabel(ID_COLUMN, row, user.getId(), writeBook);
         writeCellLabel(FIRST_NAME_COLUMN, row, user.getFirstName(), writeBook);
         writeCellLabel(LAST_NAME_COLUMN, row, user.getLastName(), writeBook);
         writeCellNumber(GRADE_COLUMN, row, Integer.parseInt(user.getGrade()), writeBook);

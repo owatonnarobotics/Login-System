@@ -95,10 +95,10 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
-        this.totalTime = totalTime;
         this.grade = grade;
         this.team = team;
         this.phone = phone;
         this.email = email;
+        this.totalTime = totalTime;
     }
 }
