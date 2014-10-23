@@ -118,20 +118,14 @@ public class ExcelManager {
         // Time that we added today, used for totalTime later
         int totalTodayTime = totalTime;
         
+        // Adds the time the user has so far
+        totalTodayTime += user.getTotalTime();
+        
         // Sets today's time
         try{
             Cell cell = sheet.getCell(currentColumn, currentRow);
             int currentWorkTime = Integer.parseInt(cell.getContents());
             totalTime += currentWorkTime;
-        } catch(Exception e){
-            // Not a number, continue on
-        }
-        
-        // Sets total time
-        try{
-            Cell cell = sheet.getCell(TOTAL_TIME_COLUMN, currentRow);
-            int currentTotalWorkTime = Integer.parseInt(cell.getContents());
-            totalTodayTime += currentTotalWorkTime;
         } catch(Exception e){
             // Not a number, continue on
         }
@@ -177,7 +171,8 @@ public class ExcelManager {
                 return currentColumn;
             }
         }
-        return 0;
+        writeCellLabel(sheet.getColumns() + 1, NAMES_ROW, todayDate, writeBook);
+        return sheet.getColumns() + 1;
     }
     
     // Writes the cell with text at the row and column specified 
