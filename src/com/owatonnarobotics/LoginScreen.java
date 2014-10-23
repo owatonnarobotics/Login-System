@@ -70,6 +70,11 @@ public class LoginScreen extends javax.swing.JFrame {
         fileMenu.add(newUserMenuItem);
 
         exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exitMenuItem);
 
         jMenuBar1.add(fileMenu);
@@ -154,6 +159,12 @@ public class LoginScreen extends javax.swing.JFrame {
         creator.setBounds(this.getX() + 120, this.getY() + 30, creator.getWidth(), creator.getHeight());
         creator.setVisible(true);
     }//GEN-LAST:event_newUserMenuItemActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        ForceLogoutScreen forceLogout = new ForceLogoutScreen();
+        forceLogout.setBounds(this.getX() + 70, this.getY() + 100, forceLogout.getWidth(), forceLogout.getHeight());
+        forceLogout.setVisible(true);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
 
     // Returns the rectangle of the screen centered in the middle of the screen
     private Rectangle getBoundsRectangle(){
