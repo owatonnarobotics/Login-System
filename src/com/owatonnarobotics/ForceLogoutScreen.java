@@ -6,6 +6,7 @@
 package com.owatonnarobotics;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,7 +100,11 @@ public class ForceLogoutScreen extends javax.swing.JFrame {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if(Arrays.equals(passwordField.getPassword(), "maybe".toCharArray())){
             try {
-                String[] users = LoginManager.signAllUsersOut();
+                ArrayList<String> users = LoginManager.signAllUsersOut();
+                
+                for(String user : users){
+                    System.out.println(user);
+                }
             } catch (IOException ex) {
                 okButton.setText("Error");
                 Logger.getLogger(ForceLogoutScreen.class.getName()).log(Level.SEVERE, null, ex);

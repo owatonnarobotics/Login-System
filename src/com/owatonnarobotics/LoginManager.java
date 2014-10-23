@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -40,6 +42,36 @@ public class LoginManager {
             
             property.store(output, null);
         }
+    }
+    
+    // Logs out all the users, returns the users that were logged in
+    public static ArrayList<String> signAllUsersOut() throws FileNotFoundException, IOException{
+        Properties property = new Properties();
+        
+        try (FileInputStream in = new FileInputStream(PROP_LOCATION)) {
+            property.load(in);
+        }
+        
+        ArrayList<String> usersSignedIn = new ArrayList<>();
+        
+        try (OutputStream output = new FileOutputStream(PROP_LOCATION)) {
+            
+            Enumeration<?> e = property.propertyNames();
+            
+            while (e.hasMoreElements()) {
+			String id = (String) e.nextElement();
+			String signedOut = property.getProperty(id);
+			
+                        if(! signedOut.equals("out")){
+                            usersSignedIn.add(id);
+                            property.setProperty(id, "out");
+                        }
+		}
+            
+            property.store(output, null);
+        }
+        
+        return usersSignedIn;
     }
     
     // Signs out a user
