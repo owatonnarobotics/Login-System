@@ -1,5 +1,6 @@
 package com.owatonnarobotics;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import jxl.read.biff.BiffException;
 
@@ -14,6 +15,8 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     public LoginScreen() {
         initComponents();
+        
+        this.setBounds(getBoundsRectangle());
     }
 
     /**
@@ -152,6 +155,17 @@ public class LoginScreen extends javax.swing.JFrame {
         creator.setVisible(true);
     }//GEN-LAST:event_newUserMenuItemActionPerformed
 
+    // Returns the rectangle of the screen centered in the middle of the screen
+    private Rectangle getBoundsRectangle(){
+        int screenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
+        int screenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+        
+        return new Rectangle(screenWidth  / 2 - (this.getBounds().width  / 2),
+                             screenHeight / 2 - (this.getBounds().height / 2),
+                                this.getWidth(),
+                                this.getHeight());
+    }
+    
     /**
      * @param args the command line arguments
      */
