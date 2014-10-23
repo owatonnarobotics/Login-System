@@ -68,6 +68,28 @@ public class ExcelManager {
         return null;
     }
     
+    // Writes the user to the Excel Document
+    public static void writeUser(User user) throws IOException, BiffException, WriteException{
+        Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
+        WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
+        
+        Sheet sheet = workbook.getSheet(0);
+        int row = sheet.getRows();
+        
+        writeCellNumber(ID_COLUMN, row, Integer.parseInt(user.getId()), writeBook);
+        writeCellLabel(FIRST_NAME_COLUMN, row, user.getFirstName(), writeBook);
+        writeCellLabel(LAST_NAME_COLUMN, row, user.getLastName(), writeBook);
+        writeCellNumber(GRADE_COLUMN, row, Integer.parseInt(user.getGrade()), writeBook);
+        writeCellLabel(TEAM_COLUMN, row, user.getTeam(), writeBook);
+        writeCellLabel(PHONE_COLUMN, row, user.getPhone(), writeBook);
+        writeCellLabel(EMAIL_COLUMN, row, user.getEmail(), writeBook);
+        writeCellNumber(TOTAL_TIME_COLUMN, row, 0, writeBook);
+        
+        writeBook.write();
+        writeBook.close();
+        workbook.close();
+    }
+    
     // Returns a random open 3 digit id
     public static String getFreeID() throws IOException, BiffException{
         
@@ -83,7 +105,7 @@ public class ExcelManager {
     }
     
     // Sets the user's time for the given day
-    public static void setTotalWorkTime(String id, int totalTime) throws IOException, BiffException, WriteException{
+    public static void setTotalWorkTime(User user, int totalTime) throws IOException, BiffException, WriteException{
         Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
         WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
         
@@ -91,7 +113,7 @@ public class ExcelManager {
         
         int currentColumn = getSetCurrentDayColumn(sheet, writeBook, getCurrentDateString());
         
-        int currentRow = getUserRow(id, sheet);
+        int currentRow = getUserRow(user.getId(), sheet);
         
         // Time that we added today, used for totalTime later
         int totalTodayTime = totalTime;
