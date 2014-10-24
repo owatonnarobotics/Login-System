@@ -72,7 +72,17 @@ public class ExcelManager {
         WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
         
         Sheet sheet = workbook.getSheet(0);
-        int row = sheet.getRows();
+        int row = 1;
+        
+        // Finds the next empty row
+        for(int currentRow = START_ROW; currentRow < sheet.getRows(); currentRow++){
+            Cell cell = sheet.getCell(ID_COLUMN, currentRow);
+            System.out.println(cell.getContents());
+            if(cell.getContents().equals("")){
+                row = currentRow;
+                break;
+            }
+        }
         
         writeCellLabel(ID_COLUMN, row, user.getId(), writeBook);
         writeCellLabel(FIRST_NAME_COLUMN, row, user.getFirstName(), writeBook);

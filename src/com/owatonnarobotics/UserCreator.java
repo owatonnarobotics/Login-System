@@ -201,13 +201,13 @@ public class UserCreator extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if(inputsCorrect().equals("yes")){
-            User user = new User(fNameTextField.getText(),
-                                 lNameTextField.getText(),
+            User user = new User(fNameTextField.getText().replace(" ", ""),
+                                 lNameTextField.getText().replace(" ", ""),
                                  id,
                                  String.valueOf(gradeComboBox.getSelectedItem()),
                                  String.valueOf(teamComboBox.getSelectedItem()),
-                                 phoneTextField.getText(),
-                                 emailTextField.getText(),
+                                 phoneTextField.getText().replace(" ", ""),
+                                 emailTextField.getText().replace(" ", ""),
                                  0);
             try {
                 ExcelManager.writeUser(user);
