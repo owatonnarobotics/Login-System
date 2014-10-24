@@ -72,7 +72,7 @@ public class ExcelManager {
         WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
         
         Sheet sheet = workbook.getSheet(0);
-        int row = 1;
+        int row = sheet.getRows();
         
         // Finds the next empty row
         for(int currentRow = START_ROW; currentRow < sheet.getRows(); currentRow++){
