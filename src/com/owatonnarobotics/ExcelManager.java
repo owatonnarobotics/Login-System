@@ -32,8 +32,9 @@ public class ExcelManager {
     private static final int TEAM_COLUMN = 4;
     private static final int PHONE_COLUMN = 5;
     private static final int EMAIL_COLUMN = 6;
-    private static final int TOTAL_TIME_COLUMN = 8;
-    private static final int DATES_START_COLUMN = 11;
+    private static final int SHIRT_SIZE_COLUMN = 7;
+    private static final int TOTAL_TIME_COLUMN = 9;
+    private static final int DATES_START_COLUMN = 12;
     
     // Lists the different row values
     private static final int NAMES_ROW = 0;
@@ -55,10 +56,11 @@ public class ExcelManager {
                 String team = sheet.getCell(TEAM_COLUMN, currentRow).getContents();
                 String phone = sheet.getCell(PHONE_COLUMN, currentRow).getContents();
                 String email = sheet.getCell(EMAIL_COLUMN, currentRow).getContents();
+                String shirtSize = sheet.getCell(SHIRT_SIZE_COLUMN, currentRow).getContents();
                 int totalTime = Integer.parseInt(sheet.getCell(TOTAL_TIME_COLUMN, currentRow).getContents());
                 
                 workbook.close();
-                return new User(fName, lName, id, grade, team, phone, email, totalTime);
+                return new User(fName, lName, id, grade, team, phone, email, shirtSize, totalTime);
             }
         }
         

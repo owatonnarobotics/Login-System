@@ -13,6 +13,7 @@ public class User {
     private String team;
     private String phone;
     private String email;
+    private String shirtSize;
     private int totalTime;
     // A 3 digit id
     private String id;
@@ -29,10 +30,6 @@ public class User {
         return id;
     }
     
-    public int getTotalTime(){
-        return totalTime;
-    }
-    
     public String getGrade() {
         return grade;
     }
@@ -44,9 +41,17 @@ public class User {
     public String getPhone() {
         return phone;
     }
+    
+    public String getShirtSize(){
+        return shirtSize;
+    }
 
     public String getEmail() {
         return email;
+    }
+    
+    public int getTotalTime(){
+        return totalTime;
     }
 
     public void setFirstName(String firstName) {
@@ -77,6 +82,10 @@ public class User {
         this.email = email;
     }
     
+    public void setShirtSize(String shirtSize){
+        this.shirtSize = shirtSize;
+    }
+    
     public void setTotalTime(int totalTime){
         this.totalTime = totalTime;
     }
@@ -91,7 +100,7 @@ public class User {
         return randomNum1 + randomNum2 + randomNum3;
     }
     
-    public User(String firstName, String lastName, String id, String grade, String team, String phone, String email, int totalTime){
+    public User(String firstName, String lastName, String id, String grade, String team, String phone, String email, String shirtSize, int totalTime){
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -99,6 +108,7 @@ public class User {
         this.team = team;
         this.phone = phone;
         this.email = email;
+        this.shirtSize = shirtSize;
         this.totalTime = totalTime;
     }
 }
