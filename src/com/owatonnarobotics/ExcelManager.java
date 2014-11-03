@@ -100,6 +100,32 @@ public class ExcelManager {
         workbook.close();
     }
     
+    // Finds the user from the first name and last name
+    public static String findUser(String fName, String lName) throws IOException, BiffException{
+        Workbook workbook = Workbook.getWorkbook(new File(EXCEL_LOCATION));
+        WritableWorkbook writeBook = Workbook.createWorkbook(new File(EXCEL_LOCATION), workbook);
+        
+        Sheet sheet = workbook.getSheet(0);
+        
+        fName = fName.toLowerCase();
+        lName = lName.toLowerCase();
+        
+        for(int currentRow = START_ROW; currentRow < sheet.getRows(); currentRow++){
+            Cell cell = sheet.getCell(ID_COLUMN, currentRow);
+            
+            String excelFName = sheet.getCell(FIRST_NAME_COLUMN, currentRow).getContents().toLowerCase();
+            String excelLName = sheet.getCell(LAST_NAME_COLUMN, currentRow).getContents().toLowerCase();
+            
+            if(excelFName.equals(fName) && excelLName.equals(lName)){
+                workbook.close();
+                return sheet.getCell(ID_COLUMN, currentRow).getContents();
+            }
+        }
+        
+        workbook.close();
+        return null;
+    }
+    
     // Returns a random open 3 digit id
     public static String getFreeID() throws IOException, BiffException{
         
