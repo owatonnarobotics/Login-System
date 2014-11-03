@@ -67,7 +67,7 @@ public class ForgotIDScreen extends javax.swing.JFrame {
         idDialog.getContentPane().add(okDialogButton);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Find ID");
+        setTitle("Forgot ID");
         setResizable(false);
 
         lNameTextBox.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +172,7 @@ public class ForgotIDScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_findButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        idDialog.dispose();
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
