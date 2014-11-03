@@ -35,6 +35,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newUserMenuItem = new javax.swing.JMenuItem();
+        forgotIDButton = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -68,6 +69,14 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         });
         fileMenu.add(newUserMenuItem);
+
+        forgotIDButton.setText("Forgot ID");
+        forgotIDButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                forgotIDButtonActionPerformed(evt);
+            }
+        });
+        fileMenu.add(forgotIDButton);
 
         exitMenuItem.setText("Logout");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +175,12 @@ public class LoginScreen extends javax.swing.JFrame {
         forceLogout.setVisible(true);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    private void forgotIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forgotIDButtonActionPerformed
+        ForgotIDScreen forgot = new ForgotIDScreen();
+        forgot.setBounds(this.getX() + 90, this.getY() + 100, forgot.getWidth(), forgot.getHeight());
+        forgot.setVisible(true);
+    }//GEN-LAST:event_forgotIDButtonActionPerformed
+
     // Returns the rectangle of the screen centered in the middle of the screen
     private Rectangle getBoundsRectangle(){
         int screenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
@@ -216,6 +231,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private javax.swing.JLabel errorLabel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem forgotIDButton;
     private javax.swing.JTextField idTextField;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem newUserMenuItem;
