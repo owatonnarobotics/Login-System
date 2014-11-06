@@ -189,7 +189,7 @@ public class UserCreator extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(errorLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,8 +218,12 @@ public class UserCreator extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         if(inputsCorrect().equals("yes")){
-            User user = new User(fNameTextField.getText().replace(" ", ""),
-                                 lNameTextField.getText().replace(" ", ""),
+            
+            String fName = fNameTextField.getText().replace(" ", "");
+            String lName = lNameTextField.getText().replace(" ", "");
+            
+            User user = new User(Character.toUpperCase(fName.charAt(0)) + fName.substring(1),
+                                 Character.toUpperCase(lName.charAt(0)) + lName.substring(1),
                                  id,
                                  String.valueOf(gradeComboBox.getSelectedItem()),
                                  String.valueOf(teamComboBox.getSelectedItem()),
