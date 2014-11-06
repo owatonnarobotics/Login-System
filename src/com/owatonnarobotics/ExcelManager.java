@@ -93,6 +93,7 @@ public class ExcelManager {
         writeCellLabel(TEAM_COLUMN, row, user.getTeam(), writeBook);
         writeCellLabel(PHONE_COLUMN, row, user.getPhone(), writeBook);
         writeCellLabel(EMAIL_COLUMN, row, user.getEmail(), writeBook);
+        writeCellLabel(SHIRT_SIZE_COLUMN, row, user.getShirtSize(), writeBook);
         writeCellNumber(TOTAL_TIME_COLUMN, row, 0, writeBook);
         
         writeBook.write();
