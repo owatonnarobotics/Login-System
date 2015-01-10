@@ -110,6 +110,7 @@ public class ForceLogoutScreen extends javax.swing.JFrame {
                         user = ExcelManager.getUser(id);
                         ExcelManager.setTotalWorkTime(user, 60);
                     }              
+                    System.exit(0);
                     this.dispose();
                 }catch (BiffException | WriteException ex) {
                         okButton.setText("Error");

@@ -38,7 +38,7 @@ public class LoginScreen extends javax.swing.JFrame {
         forgotIDButton = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Login System");
         setResizable(false);
 
