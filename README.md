@@ -6,6 +6,8 @@ Users have an easy way to create themselves in the database, and can then sign i
 
 ###Build
 
-To build the simple way open the source in any Java IDE and create a jar file. When you launch it make sure the included time_log.xls and login.properties are in the same base directory.
+To build the simple way open the source in any Java IDE, add jxl.jar in the lib folder to the build
+path and export as a runnable jar file. When you launch it make sure the included time_log.xls and
+login.properties are in the same base directory.
 
 Uses [JExcelApi](http://sourceforge.net/projects/jexcelapi/)
